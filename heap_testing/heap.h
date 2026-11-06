@@ -1,12 +1,15 @@
+#include <iostream>
+#include <vector>
+
 class Heap{
 
     private:
-        const int SIZE = 10000;
         int curr_size = 0;
         int curr_idx = 0;
-        int heap_array[SIZE];
+        std::vector<int> heap_array;
 
         void heapify_up(int i){
+            if (i==0){return;}
             int parent = (i - 1) / 2;
             if (parent < 0){return;}
             if (heap_array[parent] > heap_array[i]){
@@ -20,7 +23,7 @@ class Heap{
     public:
         Heap(){}
         void insert(int v){
-            heap_array[curr_idx] = v;
+            heap_array.push_back(v);
             heapify_up(curr_idx);
             curr_size++;
             curr_idx++;
