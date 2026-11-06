@@ -24,9 +24,9 @@ class Heap{
         Heap(){}
         void insert(int v){
             heap_array.push_back(v);
-            heapify_up(curr_idx);
             curr_size++;
-            curr_idx++;
+            curr_idx = curr_size - 1;
+            heapify_up(curr_idx);
         }
         void printHeap(){
             for (int i = 0; i < curr_size; i++){
