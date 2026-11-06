@@ -19,6 +19,9 @@ class Heap{
                 heapify_up(parent);
             }
         }
+        void heapify_down(int i){
+            
+        }
 
     public:
         Heap(){}
@@ -27,6 +30,16 @@ class Heap{
             curr_size++;
             curr_idx = curr_size - 1;
             heapify_up(curr_idx);
+        }
+        int extract_min(){
+            if (heap_array.empty()){
+                return -1;
+            }
+            int min = heap_array[0];
+            int last = heap_array.back();
+            heap_array.pop_back();
+            heapify_down(0);
+            return min;
         }
         void printHeap(){
             for (int i = 0; i < curr_size; i++){
