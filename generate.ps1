@@ -1,10 +1,16 @@
+#IMPORTANT!!!
+# WE GENERATED BOTH THE generator.cpp and this File Using claude code.
+# These both files help generate the datapoints and store in the postgresql database.
+# The prompt we use was "Help use generate 100000 data points and store them in the PostgreSQL database" using claude code
+
+
 # generate.ps1
 # Builds the workload generator (only if needed) and fills the database.
 #
 # Usage:
 #   .\generate.ps1                 -> 1,000,000 requests per workload
 #   .\generate.ps1 -Count 100000   -> smaller run
-
+#IMPORTANT: Make sure PostgreSQL is running and accessible before running this script.
 param([int]$Count = 1000000)
 
 $ErrorActionPreference = "Stop"
