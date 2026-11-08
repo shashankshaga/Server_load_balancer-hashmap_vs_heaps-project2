@@ -1,5 +1,8 @@
-// THIS IS AI GENERATED CODE 
-// THIS BASICALLY GENERATES LOAD FOR THE SERVER AND INSERTS IT INTO THE DATABASE
+//IMPORTANT!!!
+// WE GENERATED BOTH THE generator.cpp and this File Using claude code.
+// These both files help generate the datapoints and store in the postgresql database thats it
+// The prompt we used was "Help use generate 100000 data points and store them in the PostgreSQL database" using claude code
+
 #include <libpq-fe.h>
 
 #include <chrono>
