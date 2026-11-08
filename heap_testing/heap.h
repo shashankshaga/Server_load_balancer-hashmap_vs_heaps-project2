@@ -1,5 +1,6 @@
 #include <iostream>
 #include <vector>
+#include <cmath>
 
 class Heap{
 
@@ -20,7 +21,48 @@ class Heap{
             }
         }
         void heapify_down(int i){
-            
+            if (i == curr_size-1){return;}
+            int left = 2 * i + 1;
+            int right = 2 * i + 2;
+
+            if (left < curr_size && right < curr_size){
+
+                int min_val = std::min(heap_array[left], heap_array[right]);
+                int min_idx = min_val == heap_array[left] ? left : right;
+
+                if (heap_array[min_idx] < heap_array[i]){
+                    int t = heap_array[min_idx];
+                    heap_array[min_idx] = heap_array[i];
+                    heap_array[i] = t;
+                    heapify_down(min_idx);
+                }
+                else {return;}
+
+            }
+            else if (left < curr_size){
+
+                int v = heap_array[left];
+                if (v < heap_array[i]){
+                    heap_array[left] = heap_array[i];
+                    heap_array[i] = v;
+                    heapify_down(left);
+                }
+                else {return;}
+
+            }
+            else if (right < curr_size){
+
+                int v = heap_array[right];
+                if (v < heap_array[i]){
+                    heap_array[right] = heap_array[i];
+                    heap_array[i] = v;
+                    heapify_down(right);
+                }
+                else {return;}
+
+            }
+            return;
+
         }
 
     public:
@@ -36,9 +78,12 @@ class Heap{
                 return -1;
             }
             int min = heap_array[0];
-            int last = heap_array.back();
+            int last = heap_array[curr_size - 1];
+            heap_array[0] = last;
             heap_array.pop_back();
             heapify_down(0);
+            curr_size--;
+            curr_idx = curr_size - 1;
             return min;
         }
         void printHeap(){
