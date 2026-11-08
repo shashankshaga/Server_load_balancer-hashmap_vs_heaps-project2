@@ -19,11 +19,16 @@ HashMap::~HashMap() {
     }
 }
 
-//  I put my own twist on this
+//  Instead of doing a typical hash function, I made it reverse the digits of the key in our case the last servers go first
 int HashMap::hash(int key) {
 
-    unsigned int val = key * 2654435761u;
-    return val % table.size();
+    int reverse = 0;
+    while (key > 0) {
+        reverse = reverse * 10 + key % 10;
+        key /= 10;
+    }
+    return reverse % table.size();
+
 }
 
 
@@ -45,12 +50,13 @@ void HashMap::put(int key, int value) {
     table[index] = newNode;
     count++;
 
+    // This ensures that the table is resized when more than 75% full
     if (count * 4 > table.size() * 3) {
         rehash();
     }
 }
 
-
+// This checks if the key exists and returns its value, otherwise returns -1
 int HashMap::get(int key) {
 
     int index = hash(key);
@@ -85,11 +91,13 @@ void HashMap::remove(int key) {
     }
 }
 
-
+// Just a helper
 int HashMap::size() {
     return count;
 }
 
+// This finds the lowest key in the hashmap in our case the server with the lowest requests
+// Only O(n) operation
 int HashMap::min() {
 
     int minKey = -1;
@@ -107,6 +115,7 @@ int HashMap::min() {
     return minKey;
 }
 
+// resizes the table
 void HashMap::rehash() {
 
     vector<Node*> oldTable = table;
@@ -125,6 +134,7 @@ void HashMap::rehash() {
     }
 }
 
+// This is for the visualization of the hash table's keys
 vector<vector<int>> HashMap::values() {
     vector<vector<int>> result;
     for (auto node : table) {
