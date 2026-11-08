@@ -175,7 +175,7 @@ int main(int argc, char* argv[]) {
 
         double secs = std::chrono::duration<double>(std::chrono::steady_clock::now() - start).count();
         std::cout << "[" << workloadId << "] " << w.name << ": " << count
-                  << " requests in " << secs << "s\n";
+                << " requests in " << secs << "s\n";
     }
 
     // Quick summary to sanity-check the data
