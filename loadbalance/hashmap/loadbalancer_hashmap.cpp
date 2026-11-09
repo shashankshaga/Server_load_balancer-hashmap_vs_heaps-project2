@@ -56,7 +56,6 @@ int main(int argc, char* argv[]) {
     }
 
     vector<vector<int>> layout = servers.values();
-    vector<int> handled(numServers, 0);
     // We officially start the simulation timer here
     auto startTimer = chrono::steady_clock::now();
 
@@ -64,7 +63,7 @@ int main(int argc, char* argv[]) {
 
         Request req = requests[i];
         int server = servers.min();
-        int freeAt = servers.get(server); // checks which one is open
+        int freeAt = servers.get(server); // checks which one is free next
 
         int start = max(req.arrivalTime, freeAt);
         int finish = start + req.processingTime;
@@ -73,7 +72,6 @@ int main(int argc, char* argv[]) {
         int wait = start - req.arrivalTime;
         totalWait += wait;
         longestWait = max(longestWait, wait);
-        handled[server]++;
 
         // This just helps the animation happen for the first few requests
         if ( i < animation) {

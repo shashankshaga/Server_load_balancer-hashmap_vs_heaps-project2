@@ -17,11 +17,6 @@ const PORT = 3001
 // path to execute the load balancer executables
 const HASHMAP_EXE = path.join(__dirname,'..','loadbalancer_hashmap.exe');
 const HEAP_EXE = path.join(__dirname,"..", "loadbalancer_heap.exe");
-
-function clamp(value, min, max) {
-    return Math.min(Math.max(value, min), max);
-}
-
 // Executes the given executable with the provided arguments and returns the output as a promise
 function runExe(exePath, args) {
     return new Promise((resolve, reject) => {
