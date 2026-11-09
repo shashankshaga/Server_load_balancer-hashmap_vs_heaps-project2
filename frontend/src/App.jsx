@@ -11,6 +11,8 @@ export default function App() {
   const [counts, setCounts] = useState(null);
   const [results, setResults] = useState(null);
   const [workloadId, setworkloadId] = useState(2);
+  const [lookups, setLookups] = useState(0);
+
 
   async function run() {
     setResults(null);
@@ -23,7 +25,8 @@ export default function App() {
         numServers: servers,
         requests: requests,
         workloadId: workloadId,
-        animation: 200
+        animation: 200,
+        lookups: lookups
       })
     });
     const data = await res.json();
@@ -50,6 +53,8 @@ export default function App() {
         <input type="range" min="1" max="100" value={servers} onChange={(e) => setServers(Number(e.target.value))} />
         <label>Requests: <b>{requests}</b></label>
         <input type="range" min="10" max="1000000" step="1000" value={requests} onChange={(e) => setRequests(Number(e.target.value))} />
+        <label>Lookups: <b>{lookups}</b></label>
+        <input type="range" min="0" max="20" value={lookups} onChange={(e) => setLookups(Number(e.target.value))} />
         <div className="workloads">
           {Object.entries(WORKLOADS).map(([id, name]) => (
             <button

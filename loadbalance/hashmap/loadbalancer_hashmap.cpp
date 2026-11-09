@@ -7,6 +7,9 @@
 
 using namespace std;
 
+int lookups = 0;
+long long statusSum = 0;
+
 // This grabs the details of each request made
 struct Step {
     int requestId;
@@ -37,6 +40,7 @@ int main(int argc, char* argv[]) {
         if (flag == "--workload") workloadId = value;
         if (flag == "--limit") requestLimit = value;
         if (flag == "--animation") animation = value;
+        if (flag == "--lookups") lookups = value;
     }
     // loads the requests from the database
     vector<Request> requests = loadRequests(workloadId, requestLimit);
@@ -75,6 +79,12 @@ int main(int argc, char* argv[]) {
         if ( i < animation) {
             trace.push_back({req.id, req.arrivalTime, req.processingTime, server, start, finish, wait});
         }
+
+        for (int k = 0; k < lookups; k++
+        ) {
+            int id = (i * 31 + k * 17) % numServers;
+            statusSum += servers.get(id);
+        }
     }
 
     auto endTimer = chrono::steady_clock::now();
@@ -86,10 +96,13 @@ int main(int argc, char* argv[]) {
     cout << "\"routingMs\": " << elapsed << ", ";
     cout << "\"avgWait\": " << (double)totalWait / requests.size() << ", ";
     cout << "\"maxWait\": " << longestWait << ", ";
+    cout << "\"lookups\": " << lookups << ", ";
+    cout << "\"statusSum\": " << statusSum << ", ";
     cout << "\"trace\": [";
     //replay the trace for the frontend animation
     for (int i = 0; i < (int)trace.size(); i++) {
         cout << (i ? "," : "") << "{\"server\": " << trace[i].server << "}";
+        
     }
     cout << "]}\n";
     return 0;
