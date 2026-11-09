@@ -7,14 +7,14 @@ class Heap{
     private:
         int curr_size = 0;
         int curr_idx = 0;
-        std::vector<int> heap_array;
+        std::vector<long long> heap_array;
 
         void heapify_up(int i){
             if (i==0){return;}
             int parent = (i - 1) / 2;
             if (parent < 0){return;}
             if (heap_array[parent] > heap_array[i]){
-                int t = heap_array[parent];
+                long long t = heap_array[parent];
                 heap_array[parent] = heap_array[i];
                 heap_array[i] = t;
                 heapify_up(parent);
@@ -27,11 +27,11 @@ class Heap{
 
             if (left < curr_size && right < curr_size){
 
-                int min_val = std::min(heap_array[left], heap_array[right]);
+                long long min_val = std::min(heap_array[left], heap_array[right]);
                 int min_idx = min_val == heap_array[left] ? left : right;
 
                 if (heap_array[min_idx] < heap_array[i]){
-                    int t = heap_array[min_idx];
+                    long long t = heap_array[min_idx];
                     heap_array[min_idx] = heap_array[i];
                     heap_array[i] = t;
                     heapify_down(min_idx);
@@ -41,7 +41,7 @@ class Heap{
             }
             else if (left < curr_size){
 
-                int v = heap_array[left];
+                long long v = heap_array[left];
                 if (v < heap_array[i]){
                     heap_array[left] = heap_array[i];
                     heap_array[i] = v;
@@ -52,7 +52,7 @@ class Heap{
             }
             else if (right < curr_size){
 
-                int v = heap_array[right];
+                long long v = heap_array[right];
                 if (v < heap_array[i]){
                     heap_array[right] = heap_array[i];
                     heap_array[i] = v;
@@ -67,24 +67,33 @@ class Heap{
 
     public:
         Heap(){}
-        void insert(int v){
+        void insert(long long v){
             heap_array.push_back(v);
             curr_size++;
             curr_idx = curr_size - 1;
             heapify_up(curr_idx);
         }
-        int extract_min(){
+        long long extract_min(){
             if (heap_array.empty()){
                 return -1;
             }
-            int min = heap_array[0];
-            int last = heap_array[curr_size - 1];
+            long long min = heap_array[0];
+            long long last = heap_array[curr_size - 1];
             heap_array[0] = last;
             heap_array.pop_back();
-            heapify_down(0);
             curr_size--;
+            heapify_down(0);
             curr_idx = curr_size - 1;
             return min;
+        }
+
+        long long find_by_id(int id, long long id_space){
+            for (int i = 0; i < curr_size; i++){
+                if (heap_array[i] % id_space == id){
+                    return heap_array[i];
+                }
+            }
+            return -1;
         }
         void printHeap(){
             for (int i = 0; i < curr_size; i++){
