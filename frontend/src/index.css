@@ -13,3 +13,6 @@ th, td { padding: 10px; text-align: left; border-bottom: 1px solid #eee; }
 th { color: #666; font-weight: 500; }
 .verdict { margin: 16px 0 0; }
 .warning { color: #c0392b; }
+.workloads { display: flex; gap: 8px; margin: 6px 0 16px; }
+.workloads button { background: white; color: #3b6ef5; border: 1px solid #3b6ef5; }
+.workloads button.active { background: #3b6ef5; color: white; }

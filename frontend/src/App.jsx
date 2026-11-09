@@ -2,7 +2,7 @@ import { useState } from 'react'
 
 const TYPES = ["hashmap", "heap"];
 const NAMES = { hashmap: "Hashmap", heap: "Heap" }
-  
+const WORKLOADS = { 2: "Uniform Traffic", 3: "Traffic Spike", 4: "Heavy Load"}
 
 
 export default function App() {
@@ -10,6 +10,7 @@ export default function App() {
   const [requests, setRequests] = useState(100000);
   const [counts, setCounts] = useState(null);
   const [results, setResults] = useState(null);
+  const [workloadId, setworkloadId] = useState(2);
 
   async function run() {
     setResults(null);
@@ -21,7 +22,7 @@ export default function App() {
       body: JSON.stringify({
         numServers: servers,
         requests: requests,
-        workloadId: 2,
+        workloadId: workloadId,
         animation: 200
       })
     });
@@ -49,12 +50,23 @@ export default function App() {
         <input type="range" min="1" max="100" value={servers} onChange={(e) => setServers(Number(e.target.value))} />
         <label>Requests: <b>{requests}</b></label>
         <input type="range" min="10" max="1000000" step="1000" value={requests} onChange={(e) => setRequests(Number(e.target.value))} />
-        <button onClick={run}>Run Simulation</button>
-      </div>
+        <div className="workloads">
+          {Object.entries(WORKLOADS).map(([id, name]) => (
+            <button
+              key={id}
+              className={workloadId === Number(id) ? "active" : ""}
+              onClick={() => setworkloadId(Number(id))}
+            >
+              {name}
+            </button>
+          ))}
+        </div>
+        <button onClick ={run}>Run Simulation</button>
       {counts && TYPES.map((type) => <Blocks key = {type} title = {NAMES[type]} counts={counts[type]} />)}
       {results && <Comparison results={results} />}
       
     </div>  
+    </div>
   )
 }
 
